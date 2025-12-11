@@ -1,1282 +1,1383 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>JF promo - Services numériques rapides et fiables</title>
-  <meta name="description" content="JF promo - Boost publicité, badge WhatsApp, ChatGPT Go, crédits de jeux et services sur demande." />
-  <meta name="author" content="JF promo" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23000' width='100' height='100'/%3E%3Ctext x='50' y='57' font-size='50' fill='%23fff' text-anchor='middle' font-family='Arial'%3EV%3C/text%3E%3C/svg%3E">
-
-  <!-- Google Fonts (typographie premium) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,600&display=swap" rel="stylesheet">
-
-  <!-- Tailwind CSS (CDN, play mode) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    // Tailwind config for fonts & container
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#0ea5a0',
-            accent: '#7c3aed',
-            'glass': 'rgba(255,255,255,0.06)'
-          },
-          fontFamily: {
-            sans: ['Inter','system-ui','-apple-system','"Segoe UI"','Roboto','"Helvetica Neue"'],
-            serif: ['Playfair Display','Georgia']
-          }
-        }
-      }
-    }
-  </script>
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-TY3n2GZ2Yv7k2GqZMXkq...replacedForBrevity..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-  <!-- Anime.js -->
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha512-6vD1JbJ6Z3bGz0s..." crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-  <!-- Minimal custom CSS (only where relevant) -->
-  <style>
-    /* Focus-visible for accessibility */
-    :focus { outline: none; }
-    :focus-visible { outline: 3px solid rgba(14,165,160,0.35); border-radius: 6px; outline-offset: 2px; }
-
-    /* Glassy backdrop for premium look */
-    .glass-card { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
-
-    /* Smooth hardware-accelerated transforms */
-    .will-change-transform { will-change: transform, opacity; }
-
-    /* Floating WhatsApp button position */
-    .whatsapp-float { position: fixed; z-index: 60; right: 1rem; bottom: 1.25rem; }
-
-    /* Prevent large layout shifts for animated circles */
-    .circle-anim { width: 120px; height: 120px; border-radius: 9999px; display:flex; align-items:center; justify-content:center; }
-
-    /* Subtle utility for visually hidden text */
-    .sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-  </style>
-</head>
-<body class="bg-[#05060a] text-slate-100 leading-relaxed antialiased">
-
-  <!-- Skip link for screen readers -->
-  <a class="sr-only focus:not-sr-only absolute left-4 top-4 bg-white text-slate-900 px-3 py-2 rounded" href="#main">Aller au contenu</a>
-
-  <!-- HEADER (fixed) -->
-<header class="fixed inset-x-0 top-0 z-50 backdrop-blur-xl bg-[#0b1220]/70 border-b border-white/10 shadow-lg">
-  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Navigation principale">
-    <div class="flex items-center justify-between h-16">
-      
-      <!-- 🔹 Logo -->
-      <a href="#" class="flex items-center gap-3" aria-label="JF promo - Accueil">
-        <div class="flex-shrink-0">
-          <img 
-            src="0logojfpromo-removebg-preview.png" 
-            alt="Logo JF promo"
-            width="60"
-            height="60"
-            class="w-12 h-12 sm:w-14 sm:h-14 object-contain drop-shadow-lg transition-transform duration-300 hover:scale-105"
-          />
-        </div>
-        <div class="hidden sm:block leading-tight">
-          <h1 class="text-base sm:text-lg font-semibold tracking-tight text-white">
-            JF <span class="text-primary">Promo</span>
-          </h1>
-          <p class="text-xs text-slate-400">Services numériques rapides</p>
-        </div>
-      </a>
-
-      <!-- 🔹 Menu Desktop -->
-      <div class="hidden md:flex items-center gap-8">
-        <a href="#services" class="text-sm font-medium text-slate-300 hover:text-white transition">Services</a>
-        <a href="#contact" class="text-sm font-medium text-slate-300 hover:text-white transition">Contact</a>
-        <a 
-          href="https://wa.me/50943882021" 
-          class="inline-flex items-center gap-2 bg-primary text-slate-900 px-4 py-2 rounded-md text-sm font-semibold shadow-md hover:brightness-105 transition focus-visible:ring-4 focus-visible:ring-primary/30"
-        >
-          <i class="fa-solid fa-bolt"></i> Commander
-        </a>
-      </div>
-
-      <!-- 🔹 Hamburger Mobile -->
-      <div class="md:hidden">
-        <button 
-          id="btn-menu" 
-          aria-expanded="false" 
-          aria-controls="mobile-menu" 
-          class="p-2 rounded-md text-slate-300 hover:text-white focus-visible:ring-4 focus-visible:ring-primary/30"
-        >
-          <span class="sr-only">Ouvrir le menu</span>
-          <i class="fa-solid fa-bars text-xl"></i>
-        </button>
-      </div>
-    </div>
-
-    <!-- 🔹 Menu Mobile -->
-    <div id="mobile-menu" class="hidden md:hidden mt-2" aria-hidden="true">
-      <div class="bg-[#0b1220]/90 backdrop-blur-lg border border-white/10 px-3 py-4 rounded-lg">
-        <a href="#services" class="block px-3 py-2 rounded text-sm font-medium text-slate-300 hover:text-white transition">Services</a>
-        <a href="#contact" class="block px-3 py-2 rounded text-sm font-medium text-slate-300 hover:text-white transition">Contact</a>
-        <a 
-          href="https://wa.me/50943882021" 
-          class="mt-2 block px-3 py-2 rounded-md text-sm font-semibold bg-primary text-slate-900 text-center hover:brightness-110 transition"
-        >
-          <i class="fa-brands fa-whatsapp"></i> Commander
-        </a>
-      </div>
-    </div>
-  </nav>
-</header>
-
-<script>
-  
-
-  btnMenu.addEventListener('click', () => {
-    const isOpen = mobileMenu.classList.toggle('hidden');
-    btnMenu.setAttribute('aria-expanded', !isOpen);
-    mobileMenu.setAttribute('aria-hidden', isOpen);
-  });
-</script>
-
-
-  <main id="main" class="pt-24">
-<section id="hero" class="relative w-full min-h-screen overflow-hidden mb-24">
-  <div id="carousel" class="flex transition-transform duration-700 ease-in-out w-full">
-
-    <!-- 🟦 SLIDE 1 : Boostage Facebook -->
-    <div class="min-w-full flex flex-col md:flex-row items-center justify-center px-6 md:px-16 py-10">
-      <div class="w-full md:w-1/2 mb-6 md:mb-0">
-        <img src="recharge.jpg"
-             alt="Boostage Facebook"
-             class="w-full h-64 sm:h-80 md:h-[400px] object-cover rounded-lg shadow-lg">
-      </div>
-      <div class="w-full md:w-1/2 text-center md:text-left">
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">🚀Recharge carte wise , Meru</h1>
-        <p class="text-gray-600 mb-6 text-sm sm:text-base">
-         Rechargez votre carte Wise rapidement et facilement.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
-          <a id="boostFbCommander" href="#" class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition">
-            <i class="fa-brands fa-facebook"></i> Commander
-          </a>
-          <button id="boostFbInfo" class="border hidden border-blue-600 text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-600 hover:text-white transition">
-            En savoir plus
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 🟩 SLIDE 2 : Badge WhatsApp Business -->
-    <div class="min-w-full flex flex-col md:flex-row-reverse items-center justify-center px-6 md:px-16 py-10">
-      <div class="w-full md:w-1/2 mb-6 md:mb-0">
-        <img src="disney.jpeg" alt="Badge WhatsApp" class="w-full h-64 sm:h-80 md:h-[400px] object-cover rounded-lg shadow-lg">
-      </div>
-      <div class="w-full md:w-1/2 text-center md:text-right">
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">💬 Abonnement Disney</h1>
-        <p class="text-gray-600 mb-6 text-sm sm:text-base">
-       Abonnement Disney plongez dans un univers magique!
-        </p>
-        <div class="flex flex-col sm:flex-row gap-3 justify-center md:justify-end">
-          <a id="badgeWppCommander" href="#" class="bg-green-600 text-white px-6 py-3 rounded-lg shadow hover:bg-green-700 transition">
-            <i class="fa-brands fa-whatsapp"></i> Commander
-          </a>
-          <button id="badgeWppInfo" class="border hidden border-green-600 text-green-600 px-6 py-3 rounded-lg hover:bg-green-600 hover:text-white transition">
-            En savoir plus
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 🟪 SLIDE 3 : Paiement en ligne -->
-    <div class="min-w-full flex flex-col md:flex-row items-center justify-center px-6 md:px-16 py-10">
-      <div class="w-full md:w-1/2 mb-6 md:mb-0">
-        <img src="carte.webp" alt="Paiement en ligne" class="w-full h-64 sm:h-80 md:h-[400px] object-cover rounded-lg shadow-lg">
-      </div>
-      <div class="w-full md:w-1/2 text-center md:text-left">
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">💳 Creations cartes virtuelles</h1>
-        <p class="text-gray-600 mb-6 text-sm sm:text-base">
-          Créez facilement vos cartes virtuelles uniques !!
-        </p>
-        <div class="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
-          <a id="paiementCommander" href="#" class="bg-indigo-600 text-white px-6 py-3 rounded-lg shadow hover:bg-indigo-700 transition">
-            <i class="fa-solid fa-globe"></i> Commander
-          </a>
-          <button id="paiementInfo" class="border hidden border-indigo-600 text-indigo-600 px-6 py-3 rounded-lg hover:bg-indigo-600 hover:text-white transition">
-            En savoir plus
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ⚫ SLIDE 4 : ChatGPT GO -->
-    <div class="min-w-full flex flex-col md:flex-row-reverse items-center justify-center px-6 md:px-16 py-10">
-      <div class="w-full md:w-1/2 mb-6 md:mb-0">
-        <img src="netflix.webp" alt="ChatGPT GO" class="w-full h-64 sm:h-80 md:h-[400px] object-cover rounded-lg shadow-lg">
-      </div>
-      <div class="w-full md:w-1/2 text-center md:text-right">
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">🤖 Abonnement netflix</h1>
-        <p class="text-gray-600 mb-6 text-sm sm:text-base">
-        Accédez facilement à tous vos services essentiels!
-        </p>
-        <div class="flex flex-col sm:flex-row gap-3 justify-center md:justify-end">
-          <a id="chatgptCommander" href="#" class="bg-gray-800 text-white px-6 py-3 rounded-lg shadow hover:bg-gray-900 transition">
-            <i class="fa-solid fa-robot"></i> Commander
-          </a>
-          <button id="chatgptInfo" class="border hidden border-gray-800 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition">
-            En savoir plus
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 🟧 SLIDE 5 : Achat sur demande -->
-
-
-    <!-- 🎮 SLIDE 6 : Coins & Diamants -->
-    <div class="min-w-full flex flex-col md:flex-row items-center justify-center px-6 md:px-16 py-10">
-      <div class="w-full md:w-1/2 mb-6 md:mb-0">
-        <img src="freefire.jpg"
-             alt="Achat de coins et diamants"
-             class="w-full h-64 sm:h-80 md:h-[400px] object-cover rounded-lg shadow-lg">
-      </div>
-      <div class="w-full md:w-1/2 text-center md:text-left">
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">🎮 Achat de Coins & Diamants</h1>
-        <p class="text-gray-600 mb-6 text-sm sm:text-base">
-          Obtiens tes <strong>coins Free Fir</strong>, <strong>diamants Free Fire</strong>, 
-          et bien d’autres monnaies de jeux au meilleur prix 💰.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
-          <a id="coinsCommander" href="#" class="bg-orange-600 text-white px-6 py-3 rounded-lg shadow hover:bg-orange-700 transition">
-            <i class="fa-solid fa-cart-shopping"></i> Commander maintenant
-          </a>
-          <button id="coinsInfo" class="border hidden border-orange-600 text-orange-600 px-6 py-3 rounded-lg hover:bg-orange-600 hover:text-white transition">
-            En savoir plus
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 🪟 MODALES (1 par slide) -->
-<div id="boostFbModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-  <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 text-center">
-    <h2 class="text-2xl font-bold mb-3">🚀 Boostage Facebook</h2>
-    <p class="text-gray-600 mb-6">Nous augmentons la portée de vos publicités grâce à un boost ciblé et efficace.</p>
-    <button onclick="fermerModal('boostFbModal')" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700">Fermer</button>
-  </div>
-</div>
-
-<div id="badgeWppModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-  <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 text-center">
-    <h2 class="text-2xl font-bold mb-3">💬 Badge WhatsApp Business</h2>
-    <p class="text-gray-600 mb-6">Obtenez la crédibilité de votre compte professionnel avec le badge vérifié.</p>
-    <button onclick="fermerModal('badgeWppModal')" class="bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700">Fermer</button>
-  </div>
-</div>
-
-<div id="paiementModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-  <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 text-center">
-    <h2 class="text-2xl font-bold mb-3">💳 Paiement en ligne</h2>
-    <p class="text-gray-600 mb-6">Nous réglons vos paiements sur les plateformes mondiales en toute sécurité.</p>
-    <button onclick="fermerModal('paiementModal')" class="bg-indigo-600 text-white px-5 py-2 rounded hover:bg-indigo-700">Fermer</button>
-  </div>
-</div>
-
-<div id="chatgptModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-  <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 text-center">
-    <h2 class="text-2xl font-bold mb-3">Carte Wise & Meru</h2>
-    <p class="text-gray-600 mb-6">Carte Wise – multi-devises, rechargement facile</p>
-    <button onclick="fermerModal('chatgptModal')" class="bg-gray-800 text-white px-5 py-2 rounded hover:bg-gray-900">Fermer</button>
-  </div>
-</div>
-
-<div id="achatModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-  <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 text-center">
-    <h2 class="text-2xl font-bold mb-3">🛍️ Achat sur demande</h2>
-    <p class="text-gray-600 mb-6">Nous achetons pour vous n’importe quel article sur internet, selon vos besoins.</p>
-    <button onclick="fermerModal('achatModal')" class="bg-orange-600 text-white px-5 py-2 rounded hover:bg-orange-700">Fermer</button>
-  </div>
-</div>
-
-<div id="coinsModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-  <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 text-center">
-    <h2 class="text-2xl font-bold mb-3">🎮 Coins & Diamants</h2>
-    <p class="text-gray-600 mb-6">Recharge rapide et sécurisée pour tous vos jeux préférés : Free Fir, Free Fire, etc.</p>
-    <button onclick="fermerModal('coinsModal')" class="bg-orange-600 text-white px-5 py-2 rounded hover:bg-orange-700">Fermer</button>
-  </div>
-</div>
-
-<!-- ✅ SCRIPT GÉNÉRAL -->
-<script>
-  const numeroWhatsApp = "50943882021";
-
-  function ouvrirModal(id) {
-    document.getElementById(id).classList.remove("hidden");
-  }
-  function fermerModal(id) {
-    document.getElementById(id).classList.add("hidden");
-  }
-
-  function commander(service) {
-    const message = encodeURIComponent(`Bonjour 👋, je souhaite commander le service suivant : ${service}`);
-    window.open(`https://wa.me/${numeroWhatsApp}?text=${message}`, "_blank");
-  }
-
-  // 🎯 Liaisons uniques pour chaque slide
-  document.getElementById("boostFbInfo").onclick = () => ouvrirModal("boostFbModal");
-  document.getElementById("boostFbCommander").onclick = () => commander("Boostage Facebook");
-
-  document.getElementById("badgeWppInfo").onclick = () => ouvrirModal("badgeWppModal");
-  document.getElementById("badgeWppCommander").onclick = () => commander("Badge WhatsApp Business");
-
-  document.getElementById("paiementInfo").onclick = () => ouvrirModal("paiementModal");
-  document.getElementById("paiementCommander").onclick = () => commander("Paiement de cours ou services en ligne");
-
-  document.getElementById("chatgptInfo").onclick = () => ouvrirModal("chatgptModal");
-  document.getElementById("chatgptCommander").onclick = () => commander("Accès ChatGPT Go");
-
-  document.getElementById("achatInfo").onclick = () => ouvrirModal("achatModal");
-  document.getElementById("achatCommander").onclick = () => commander("Achat sur demande");
-
-  document.getElementById("coinsInfo").onclick = () => ouvrirModal("coinsModal");
-  document.getElementById("coinsCommander").onclick = () => commander("Achat de Coins & Diamants");
-</script>
-
-
-<!-- ===== SCRIPT ANIME.JS + CAROUSEL ===== -->
-<script>
-  const slides = document.querySelectorAll('#carousel > div');
-  let currentSlide = 0;
-
-  function showSlide(index) {
-    slides.forEach((s, i) => {
-      s.classList.toggle('hidden', i !== index);
-      if (i === index) {
-        anime({
-          targets: s.querySelectorAll('img, h1, p, a'),
-          opacity: [0, 1],
-          translateY: [30, 0],
-          delay: anime.stagger(100),
-          duration: 700,
-          easing: 'easeOutQuad'
-        });
-      }
-    });
-  }
-
-  function nextSlide() {
-    currentSlide = (currentSlide + 1) % slides.length;
-    showSlide(currentSlide);
-  }
-
-  // Défilement automatique toutes les 5s
-  setInterval(nextSlide, 5000);
-
-  // Afficher le premier slide
-  showSlide(currentSlide);
-</script>
-
-    <!-- HERO / Introduction (animated) -->
-  
-
-    <!-- SERVICES SECTION -->
-    <section id="services" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20" aria-labelledby="services-title">
-      <div class="mb-8" data-animate>
-        <h2 id="services-title" class="text-3xl sm:text-4xl font-serif">Nos Services</h2>
-        <p class="text-slate-400 mt-2 max-w-prose">Solutions claires, prix transparents et livraison rapide. Chaque service est optimisé pour la conversion.</p>
-      </div>
-
-      <!-- Cards grid -->
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <!-- Card 1 -->
-        <!-- Boostage Facebook (version interactive premium corrigée) -->
-       <!-- ===== Carte Service : Boostage Facebook ===== -->
-<article class="service-card relative p-6 rounded-2xl glass-card border border-white/10 overflow-visible will-change-transform"
-  data-animate
-  data-service="Abonnement Netflix"
-  data-phone="50943882021"
-  data-plans='[
-    {"plan":"1 mois","price":4700 Gdes"},
-    {"plan":"3 mois","price":"2 000 Gdes"},
-    {"plan":"6 mois","price":"3 800 Gdes"}
-  ]'>
-
-  <div class="flex items-start gap-4">
-    <div class="flex-none">
-      <div class="w-16 h-16  flex items-center justify-center ">
-        <img src="logonetflix.webp" alt="Welcome" class="full-img">
-      </div>
-    </div>
-    <div>
-      <h3 class="text-lg font-semibold">Abonnement Netflix</h3>
-      <p class="text-sm text-slate-300 mt-1">
-        Profitez de films, séries et contenu exclusif en illimité sur votre appareil.
-      </p>
-    </div>
-  </div>
-
-  <!-- Détails -->
-  <ul class="mt-5 text-sm space-y-2 text-slate-300">
-    <li>🎬 Accès illimité 24/7</li>
-    <li>⚡ Activation rapide</li>
-    <li>📱 Compatibilité mobile & Smart TV</li>
-  </ul>
-
-  <!-- Tarifs -->
-  <div class="mt-5 border-t border-white/10 pt-4">
-    <p class="text-sm font-medium text-slate-200 mb-2">💰 Tarifs disponibles :</p>
-    <div class="grid grid-cols-1 gap-2 text-slate-300 text-sm">
-      <div class="flex justify-between"><span>1 mois</span><span class="font-semibold text-white">400 Gdes</span></div>
-      <div class="flex justify-between"><span>3 mois</span><span class="font-semibold text-white">2 000 Gdes</span></div>
-      <div class="flex justify-between"><span>6 mois</span><span class="font-semibold text-white">3 800 Gdes</span></div>
-    </div>
-  </div>
-
-  <!-- Boutons -->
-  <div class="mt-6 flex items-center justify-between">
-    <button class="buy-btn relative inline-flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-slate-900 text-sm font-medium hover:brightness-110">
-      <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i> Acheter
-    </button>
-    <button class="text-slate-400 text-sm" aria-label="Infos">
-      <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-    </button>
-  </div>
-</article>
-
-
-<!-- ===== MODALE GLOBALE ===== -->
-<div id="buy-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center">
-  <div class="bg-[#0b1220] border border-white/10 rounded-2xl p-6 w-[90%] sm:w-[400px] text-center relative animate-fadeIn">
-    <h3 id="modal-title" class="text-xl font-semibold mb-4 text-white"></h3>
-    <ul id="modal-plans" class="text-slate-300 space-y-2 mb-6 text-sm"></ul>
-    <button id="cancel-btn" class="mt-3 px-4 py-2 rounded-md bg-slate-700 hover:bg-slate-600 text-white text-sm">
-      Annuler
-    </button>
-  </div>
-</div>
-
-<!-- ===== STYLE ANIMATION ===== -->
-<style>
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
-.animate-fadeIn { animation: fadeIn 0.25s ease-out; }
-</style>
-
-<!-- ===== SCRIPT ===== -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const modal = document.getElementById("buy-modal");
-  const title = document.getElementById("modal-title");
-  const plansList = document.getElementById("modal-plans");
-  const cancel = document.getElementById("cancel-btn");
-
-  // Gérer ouverture de la modale
-  document.querySelectorAll(".service-card .buy-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const card = btn.closest(".service-card");
-      const service = card.dataset.service;
-      const phone = card.dataset.phone;
-      const plans = JSON.parse(card.dataset.plans || "[]");
-
-      // Injecter contenu dynamique
-      title.textContent = service;
-      plansList.innerHTML = "";
-
-      plans.forEach(p => {
-        const li = document.createElement("li");
-        li.innerHTML = `
-          <button class="w-full bg-white/5 hover:bg-white/10 rounded-md px-3 py-2 transition">
-            ${p.plan} — ${p.price}
-          </button>
-        `;
-
-        // Quand l’utilisateur clique sur un plan
-        li.querySelector("button").addEventListener("click", () => {
-          const msg = encodeURIComponent(
-            `Bonjour 👋, je souhaite acheter le service "${service}"\nPlan choisi : ${p.plan}\nPrix : ${p.price}`
-          );
-          window.open(`https://wa.me/${phone}?text=${msg}`, "_blank", "noopener");
-          modal.classList.add("hidden");
-        });
-
-        plansList.appendChild(li);
-      });
-
-      // Afficher la modale
-      modal.classList.remove("hidden");
-    });
-  });
-
-  // Fermeture de la modale
-  cancel.addEventListener("click", () => modal.classList.add("hidden"));
-  modal.addEventListener("click", e => {
-    if (e.target === modal) modal.classList.add("hidden");
-  });
-});
-</script>
-
-
-        <!-- Card 2 -->
-        <!-- ===== Carte Service : Badge de Vérification WhatsApp Business ===== -->
-<article class="service-card relative p-6 rounded-2xl glass-card border border-white/10 overflow-visible will-change-transform"
-  data-animate
-  data-service="Top-Up Free Fire Gift"
-  data-phone="50943882021"
-  data-plans='[
-    {"plan":"Free Fire – 100 Diamonds","price":"175Gdes"},
-    {"plan":"Free Fire – 310 Diamonds","price":"450 Gdes"},
-    {"plan":"Free Fir – 1 000 Coins","price":"800 Gdes"}
-  ]'>
-
-  <div class="flex items-start gap-4">
-    <div class="flex-none">
-      <div class="w-16 h-16 ">
-         <img src="logofreefire.png" alt="Welcome" class="full-img">
-      </div>
-    </div>
-    <div>
-      <h3 class="text-lg font-semibold">Achat de Coins Free Fire Gift</h3>
-      <p class="text-sm text-slate-300 mt-1">
-        Recharge instantanée de diamonds Free Fire et coins Free Fir pour booster votre jeu.
-      </p>
-    </div>
-  </div>
-
-  <!-- Détails -->
-  <ul class="mt-4 text-sm space-y-2 text-slate-300" aria-label="Détails du service Top-Up Jeux">
-    <li>⚡ Livraison instantanée</li>
-    <li>🎮 Sécurisé et fiable</li>
-    <li>💳 Paiement facile (Haiti)</li>
-  </ul>
-
-  <!-- Tarifs -->
-  <div class="mt-5 border-t border-white/10 pt-4">
-    <p class="text-sm font-medium text-slate-200 mb-2">💰 Tarifs disponibles :</p>
-    <div class="grid grid-cols-1 gap-2 text-slate-300 text-sm">
-      <div class="flex justify-between"><span>Free Fire – 100 Diamonds</span><span class="font-semibold text-white">175Gdes</span></div>
-      <div class="flex justify-between"><span>Free Fire – 310 Diamonds</span><span class="font-semibold text-white">450 Gdes</span></div>
-      <div class="flex justify-between"><span>Free Fir – 1 000 Coins</span><span class="font-semibold text-white">800 Gdes</span></div>
-    </div>
-  </div>
-
-  <!-- Boutons -->
-  <div class="mt-6 flex items-center justify-between">
-    <button class="buy-btn inline-flex items-center gap-2 px-4 py-2 rounded-md bg-[#facc15] text-slate-900 text-sm font-medium hover:brightness-110">
-      <i class="fa-solid fa-cart-shopping"></i> Acheter
-    </button>
-    <button class="text-slate-400 text-sm" aria-label="En savoir plus sur Top-Up Jeux">
-      <i class="fa-solid fa-circle-info"></i>
-    </button>
-  </div>
-</article>
-
-
-        <!-- Card 3 -->
-       <!-- ===== Carte Service : Plan ChatGPT Go ===== -->
-<article class="service-card relative p-6 rounded-2xl glass-card border border-white/10 overflow-visible will-change-transform"
-  data-animate
-  data-service="Recharge Carte Meru"
-  data-phone="50943882021"
-  data-plans='[
-    {"plan":"Recharge 10 USD","price":"1 500 Gdes"},
-    {"plan":"Recharge 25 USD","price":"3 600 Gdes"},
-    {"plan":"Recharge 50 USD","price":"7 000 Gdes"}
-  ]'>
-
-  <div class="flex items-start gap-4">
-    <div class="flex-none">
-      <div class="w-16 h-16 ">
-         <img src="logomeru.png" alt="Welcome" class="full-img">
-      </div>
-    </div>
-
-    <div>
-      <h3 class="text-lg font-semibold">Recharge Carte Meru</h3>
-      <p class="text-sm text-slate-300 mt-1">
-        Recharge rapide et sécurisée de votre carte Meru pour vos achats en ligne et paiements internationaux.
-      </p>
-    </div>
-  </div>
-
-  <ul class="mt-4 text-sm space-y-2 text-slate-300">
-    <li>⚡ Traitement rapide</li>
-    <li>💳 Taux avantageux</li>
-    <li>🌍 Idéal pour achats internationaux</li>
-  </ul>
-
-  <div class="mt-5 border-t border-white/10 pt-4">
-    <p class="text-sm font-medium text-slate-200 mb-2">💰 Tarifs disponibles :</p>
-    <div class="grid grid-cols-1 gap-2 text-slate-300 text-sm">
-      <div class="flex justify-between"><span>Recharge 10 USD</span><span class="font-semibold text-white">1 500 Gdes</span></div>
-      <div class="flex justify-between"><span>Recharge 25 USD</span><span class="font-semibold text-white">3 600 Gdes</span></div>
-      <div class="flex justify-between"><span>Recharge 50 USD</span><span class="font-semibold text-white">7 000 Gdes</span></div>
-    </div>
-  </div>
-
-  <div class="mt-6 flex items-center justify-between">
-    <button class="buy-btn inline-flex items-center gap-2 px-4 py-2 rounded-md bg-indigo-500 text-slate-900 text-sm font-medium hover:brightness-110">
-      <i class="fa-solid fa-cart-shopping"></i> Acheter
-    </button>
-    <button class="text-slate-400 text-sm">
-      <i class="fa-solid fa-circle-info"></i>
-    </button>
-  </div>
-</article>
-
-
-<article class="service-card relative p-6 rounded-2xl glass-card border border-white/10 overflow-visible will-change-transform"
-  data-animate
-  data-service="Recharge Carte Wise"
-  data-phone="50943882021"
-  data-plans='[
-    {"plan":"Recharge 10 USD","price":"1 500 Gdes"},
-    {"plan":"Recharge 25 USD","price":"3 600 Gdes"},
-    {"plan":"Recharge 50 USD","price":"7 000 Gdes"}
-  ]'>
-
-  <div class="flex items-start gap-4">
-    <div class="flex-none">
-      <div class="w-16 h-16 rounded-full bg-white">
- <img src="logowise.png" alt="Welcome" class="full-img">      </div>
-    </div>
-
-    <div>
-      <h3 class="text-lg font-semibold">Recharge Carte Wise</h3>
-      <p class="text-sm text-slate-300 mt-1">
-        Recharge sécurisée de votre carte Wise pour vos paiements, abonnements et achats internationaux.
-      </p>
-    </div>
-  </div>
-
-  <ul class="mt-4 text-sm space-y-2 text-slate-300">
-    <li>⚡ Traitement rapide</li>
-    <li>💳 Taux avantageux</li>
-    <li>🌍 Idéal pour services et achats internationaux</li>
-  </ul>
-
-  <div class="mt-5 border-t border-white/10 pt-4">
-    <p class="text-sm font-medium text-slate-200 mb-2">💰 Tarifs disponibles :</p>
-    <div class="grid grid-cols-1 gap-2 text-slate-300 text-sm">
-      <div class="flex justify-between"><span>Recharge 10 USD</span><span class="font-semibold text-white">1 500 Gdes</span></div>
-      <div class="flex justify-between"><span>Recharge 25 USD</span><span class="font-semibold text-white">3 600 Gdes</span></div>
-      <div class="flex justify-between"><span>Recharge 50 USD</span><span class="font-semibold text-white">7 000 Gdes</span></div>
-    </div>
-  </div>
-
-  <div class="mt-6 flex items-center justify-between">
-    <button class="buy-btn inline-flex items-center gap-2 px-4 py-2 rounded-md bg-emerald-500 text-slate-900 text-sm font-medium hover:brightness-110">
-      <i class="fa-solid fa-cart-shopping"></i> Acheter
-    </button>
-    <button class="text-slate-400 text-sm">
-      <i class="fa-solid fa-circle-info"></i>
-    </button>
-  </div>
-</article>
-
-
-<!-- Card 4 -->
-
-<!-- Card 4 -->
-<article class="service-card relative p-6 rounded-2xl glass-card border border-white/10 overflow-visible will-change-transform"
-  data-animate
-  data-service="Création de Carte Virtuelle"
-  data-phone="50943882021"
-  data-plans='[
-    {"plan":"Carte virtuelle standard","price":"500 Gdes"},
-    {"plan":"Carte virtuelle premium","price":"1 200 Gdes"}
-  ]'>
-
-  <div class="flex items-start gap-4">
-    <div class="flex-none">
-      <div class="w-16 h-16 rounded-full bg-gradient-to-br from-purple-600 to-[#a855f7] flex items-center justify-center ring-1 ring-white/8">
-        <i class="fa-solid fa-credit-card fa-lg" aria-hidden="true"></i>
-      </div>
-    </div>
-
-    <div>
-      <h3 class="text-lg font-semibold">Création de Carte Virtuelle</h3>
-      <p class="text-sm text-slate-300 mt-1">
-        Obtenez une carte virtuelle sécurisée pour vos achats et paiements en ligne sans risque.
-      </p>
-    </div>
-  </div>
-
-  <ul class="mt-4 text-sm space-y-2 text-slate-300">
-    <li>🔒 Sécurité renforcée</li>
-    <li>🌍 Acceptée sur les sites internationaux</li>
-    <li>⚡ Génération rapide</li>
-  </ul>
-
-  <div class="mt-5 border-t border-white/10 pt-4">
-    <p class="text-sm font-medium text-slate-200 mb-2">💰 Tarifs disponibles :</p>
-    <div class="grid grid-cols-1 gap-2 text-slate-300 text-sm">
-      <div class="flex justify-between"><span>Carte virtuelle standard</span><span class="font-semibold text-white">500 Gdes</span></div>
-      <div class="flex justify-between"><span>Carte virtuelle premium</span><span class="font-semibold text-white">1 200 Gdes</span></div>
-    </div>
-  </div>
-
-  <div class="mt-6 flex items-center justify-between">
-    <button class="buy-btn inline-flex items-center gap-2 px-4 py-2 rounded-md bg-purple-500 text-slate-900 text-sm font-medium hover:brightness-110">
-      <i class="fa-solid fa-cart-shopping"></i> Acheter
-    </button>
-    <button class="text-slate-400 text-sm" aria-label="Infos Carte Virtuelle">
-      <i class="fa-solid fa-circle-info"></i>
-    </button>
-  </div>
-</article>
-<!-- Card 5 -->
- <article class="service-card relative p-6 rounded-2xl glass-card border border-white/10 overflow-visible will-change-transform"
-  data-animate
-  data-service="Abonnement Disney+"
-  data-phone="50943882021"
-  data-plans='[
-    {"plan":"1 mois","price":"400 Gdes"},
-    {"plan":"3 mois","price":"1 900 Gdes"},
-    {"plan":"1 an","price":"6 500 Gdes"}
-  ]'>
-
-  <div class="flex items-start gap-4">
-    <div class="flex-none">
-      <div class="w-16 h-16 rounded-full ">
-       <img src="logodisney.png" alt="Welcome" class="full-img">
-      </div>
-    </div>
-
-    <div>
-      <h3 class="text-lg font-semibold">Abonnement Disney+</h3>
-      <p class="text-sm text-slate-300 mt-1">
-        Profitez des films Disney, Marvel, Pixar et Star Wars en illimité sur tous vos appareils.
-      </p>
-    </div>
-  </div>
-
-  <ul class="mt-4 text-sm space-y-2 text-slate-300">
-    <li>🎬 Contenu illimité</li>
-    <li>⚡ Activation rapide</li>
-    <li>📱 Compatible mobile, TV & tablette</li>
-  </ul>
-
-  <div class="mt-5 border-t border-white/10 pt-4">
-    <p class="text-sm font-medium text-slate-200 mb-2">💰 Tarifs disponibles :</p>
-    <div class="grid grid-cols-1 gap-2 text-slate-300 text-sm">
-      <div class="flex justify-between"><span>1 mois</span><span class="font-semibold text-white">400 Gdes</span></div>
-      <div class="flex justify-between"><span>3 mois</span><span class="font-semibold text-white">1 900 Gdes</span></div>
-      <div class="flex justify-between"><span>1 an</span><span class="font-semibold text-white">6 500 Gdes</span></div>
-    </div>
-  </div>
-
-  <div class="mt-6 flex items-center justify-between">
-    <button class="buy-btn inline-flex items-center gap-2 px-4 py-2 rounded-md bg-blue-500 text-slate-900 text-sm font-medium hover:brightness-110">
-      <i class="fa-solid fa-cart-shopping"></i> Acheter
-    </button>
-    <button class="text-slate-400 text-sm" aria-label="Infos Abonnement Disney+">
-      <i class="fa-solid fa-circle-info"></i>
-    </button>
-  </div>
-</article>
-
-<article class="service-card relative p-6 rounded-2xl glass-card border border-white/10 overflow-visible will-change-transform"
-  data-animate
-  data-service="Gift Card Netflix"
-  data-phone="50943882021"
-  data-plans='[
-    {"plan":"Gift Card 5 USD","price":"900 Gdes"},
-    {"plan":"Gift Card 10 USD","price":"1 700 Gdes"},
-    {"plan":"Gift Card 25 USD","price":"4 000 Gdes"}
-  ]'>
-
-  <div class="flex items-start gap-4">
-    <div class="flex-none">
-      <div class="w-16 h-16 ">
- <img src="gifcard.png" alt="Welcome" class="full-img bg-white">      </div>
-    </div>
-
-    <div>
-      <h3 class="text-lg font-semibold">Gift Card Netflix</h3>
-      <p class="text-sm text-slate-300 mt-1">
-        Achetez vos cartes cadeaux Netflix pour recharger votre compte ou offrir un abonnement.
-      </p>
-    </div>
-  </div>
-
-  <!-- Détails -->
-  <ul class="mt-4 text-sm space-y-2 text-slate-300">
-    <li>🎁 Parfait pour offrir ou recharger</li>
-    <li>⚡ Code envoyé instantanément</li>
-    <li>🌍 Utilisable sur tous les comptes Netflix</li>
-  </ul>
-
-  <!-- Tarifs -->
-  <div class="mt-5 border-t border-white/10 pt-4">
-    <p class="text-sm font-medium text-slate-200 mb-2">💰 Montants disponibles :</p>
-    <div class="grid grid-cols-1 gap-2 text-slate-300 text-sm">
-      <div class="flex justify-between"><span>Gift Card 5 USD</span><span class="font-semibold text-white">900 Gdes</span></div>
-      <div class="flex justify-between"><span>Gift Card 10 USD</span><span class="font-semibold text-white">1 700 Gdes</span></div>
-      <div class="flex justify-between"><span>Gift Card 25 USD</span><span class="font-semibold text-white">4 000 Gdes</span></div>
-    </div>
-  </div>
-
-  <!-- Boutons -->
-  <div class="mt-6 flex items-center justify-between">
-    <button class="buy-btn inline-flex items-center gap-2 px-4 py-2 rounded-md bg-red-500 text-slate-900 text-sm font-medium hover:brightness-110">
-      <i class="fa-solid fa-cart-shopping"></i> Acheter
-    </button>
-    <button class="text-slate-400 text-sm" aria-label="Infos Gift Card Netflix">
-      <i class="fa-solid fa-circle-info"></i>
-    </button>
-  </div>
-</article>
-
-<!-- Modal pour Crédits et Pièces de Jeux - À PLACER APRÈS LA FERMETURE DE LA BALISE </main> -->
-
-
-
-        <!-- Card 5 -->
-        <article class="p-6 rounded-2xl glass-card border border-white/6 will-change-transform" data-animate role="region" aria-labelledby="s5-title">
-          <div class="flex items-start gap-4">
-            <div class="flex-none">
-              <div class="w-16 h-16 rounded-full bg-gradient-to-br from-yellow-400 to-[#f59e0b] flex items-center justify-center ring-1 ring-white/8">
-                <i class="fa-solid fa-wrench fa-lg" aria-hidden="true"></i>
-              </div>
-            </div>
-            <div>
-              <h3 id="s5-title" class="text-lg font-semibold">Service sur Demande</h3>
-              <p class="text-sm text-slate-300 mt-1">Besoin spécifique ? Nous le réalisons sur mesure (cartes virtuelles, abonnements, etc.).</p>
-            </div>
-          </div>
-
-          <ul class="mt-4 text-sm space-y-2 text-slate-300" aria-label="Détails Service sur demande">
-            <li>📋 Sur devis</li>
-            <li>📞 Réponse rapide</li>
-          </ul>
-
-          <div class="mt-6 flex items-center justify-between">
-            <a href="https://wa.me/50943882021" class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-yellow-400 text-slate-900 text-sm font-medium">Faire une demande</a>
-            <button class="text-slate-400 text-sm" aria-label="En savoir plus Service sur demande"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></button>
-          </div>
-        </article>
-      </div>
-    </section>
- <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20" aria-labelledby="hero-title" data-animate>
-  <div class="grid md:grid-cols-12 gap-8 items-center">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Digital Money - Gagnez de l'argent en ligne</title>
     
-    <!-- Left Side -->
-    <div class="md:col-span-7">
-      <div class="relative overflow-hidden pr-6">
+    <!-- CDN Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CDN Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CDN Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- CDN Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <!-- Configuration Tailwind Mobile First -->
+    <script>
+        tailwind.config = {
+            theme: {
+                screens: {
+                    'xs': '375px',
+                    'sm': '640px',
+                    'md': '768px',
+                    'lg': '1024px',
+                    'xl': '1280px',
+                    '2xl': '1536px',
+                },
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        },
+                        secondary: {
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'heading': ['Poppins', 'Inter', 'sans-serif'],
+                    },
+                    fontSize: {
+                        'xxs': '0.625rem',
+                    },
+                    spacing: {
+                        '18': '4.5rem',
+                        '88': '22rem',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'slide-down': 'slideDown 0.3s ease-out',
+                        'pulse-subtle': 'pulse 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(10px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        slideDown: {
+                            '0%': { transform: 'translateY(-10px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Styles CSS Mobile First */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
         
-        <!-- Decorative background -->
-        <div aria-hidden="true" class="absolute -left-10 -top-14 circle-anim will-change-transform"
-          style="background: radial-gradient(circle at 30% 30%, rgba(124,58,237,0.18), transparent 35%),
-                 radial-gradient(circle at 70% 70%, rgba(14,165,160,0.12), transparent 40%);
-                 transform: scale(.6);">
-        </div>
-
-        <h2 id="hero-title" class="text-4xl sm:text-5xl font-serif leading-tight tracking-tight mb-4">
-          JF Promo — <span class="text-primary">Services numériques rapides</span><br class="hidden sm:block" />
-          pour vos paiements, abonnements & recharges.
-        </h2>
-
-        <p class="text-lg text-slate-300 mb-6 max-w-prose">
-          Services complets : création de cartes virtuelles, recharge Meru & Wise, abonnements Netflix/Disney+, gift cards, crédits de jeux (Free Fire, Free Fir), publicité digitale et assistance personnalisée.
-        </p>
-
-        <div class="flex gap-3 flex-wrap">
-          <a href="#services" class="inline-flex items-center gap-2 px-4 py-3 rounded-md bg-accent hover:brightness-105 text-white font-semibold focus-visible:ring-4 focus-visible:ring-accent/30">
-            <i class="fa-solid fa-layer-group" aria-hidden="true"></i> Voir nos services
-          </a>
-          <a href="https://wa.me/50943882021" class="inline-flex items-center gap-2 px-4 py-3 rounded-md bg-transparent border border-white/8 text-sm text-slate-200 hover:bg-white/2 focus-visible:ring-4 focus-visible:ring-primary/20">
-            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Discuter sur WhatsApp
-          </a>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Right Side -->
-    <div class="md:col-span-5">
-      <div class="space-y-4">
-
-        <div class="p-5 rounded-xl glass-card border border-white/4 will-change-transform" data-animate>
-          <h3 class="font-semibold">Livraison instantanée</h3>
-          <p class="text-sm text-slate-300">Codes, abonnements et recharges envoyés en quelques secondes.</p>
-        </div>
-
-        <div class="p-5 rounded-xl glass-card border border-white/4 will-change-transform" data-animate>
-          <h3 class="font-semibold">Paiement sécurisé</h3>
-          <p class="text-sm text-slate-300">Protection renforcée pour vos achats, cartes et transactions numériques.</p>
-        </div>
-
-        <div class="p-5 rounded-xl glass-card border border-white/4 will-change-transform" data-animate>
-          <h3 class="font-semibold">Services variés</h3>
-          <p class="text-sm text-slate-300">Cartes virtuelles, Meru/Wise, abonnements streaming, jeux, gift cards… tout au même endroit.</p>
-        </div>
-
-        <div class="p-5 rounded-xl glass-card border border-white/4 will-change-transform" data-animate>
-          <h3 class="font-semibold">Support 24/7</h3>
-          <p class="text-sm text-slate-300">Assistance rapide pour chaque achat et demande spéciale.</p>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
-</section>
-
-    <!-- CONTACT SECTION -->
-<section
-  id="contact"
-  class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20"
-  aria-labelledby="contact-title"
-  data-animate
->
-  <div
-    class="bg-gradient-to-b from-white/5 to-transparent p-6 sm:p-8 rounded-2xl border border-white/10 backdrop-blur-lg shadow-md"
-  >
-    <h2
-      id="contact-title"
-      class="text-2xl sm:text-3xl font-serif mb-2 text-white"
-    >
-      Contactez <span class="text-primary">JF promo</span>
-    </h2>
-
-    <p class="text-slate-400 mb-8 text-sm sm:text-base">
-      Remplissez le formulaire ci-dessous ou discutez directement via WhatsApp.
-    </p>
-
-    <!-- ✅ Formulaire simple (Formspree) -->
-    <form
-      action="https://formspree.io/f/mpwjajva"
-      method="POST"
-      class="grid gap-5"
-    >
-      <!-- Nom -->
-      <div class="flex flex-col">
-        <label for="name" class="text-sm font-medium mb-1 text-white/90"
-          >Nom complet</label
-        >
-        <input
-          id="name"
-          name="name"
-          type="text"
-          required
-          placeholder="Jean Dupont"
-          autocomplete="name"
-          class="w-full rounded-md px-3 py-2 bg-[#0b1220] border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:ring-4 focus:ring-primary/30 transition"
-        />
-      </div>
-
-      <!-- Contact -->
-      <div class="flex flex-col">
-        <label for="contact" class="text-sm font-medium mb-1 text-white/90"
-          >WhatsApp ou Email</label
-        >
-        <input
-          id="contact"
-          name="contact"
-          type="text"
-          required
-          placeholder="+509 3X XX XX XX ou mail@exemple.com"
-          autocomplete="email"
-          class="w-full rounded-md px-3 py-2 bg-[#0b1220] border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:ring-4 focus:ring-primary/30 transition"
-        />
-      </div>
-
-      <!-- Sélection du service -->
-      <div class="flex flex-col">
-        <label for="service" class="text-sm font-medium mb-1 text-white/90"
-          >Sélection du service</label
-        >
-        <select
-          id="service"
-          name="service"
-          required
-          class="w-full rounded-md px-3 py-2 bg-[#0b1220] border border-white/10 text-white focus:outline-none focus:ring-4 focus:ring-primary/30 transition"
-        >
-          <option value="" disabled selected>Choisir un service</option>
-          <option>Boostage de Publicité Facebook</option>
-          <option>Badge WhatsApp Business</option>
-          <option>Plan ChatGPT Go</option>
-          <option>Crédits / Pièces de jeux</option>
-          <option>Service sur Demande</option>
-        </select>
-      </div>
-
-      <!-- Message -->
-      <div class="flex flex-col">
-        <label for="message" class="text-sm font-medium mb-1 text-white/90"
-          >Message</label
-        >
-        <textarea
-          id="message"
-          name="message"
-          rows="4"
-          placeholder="Dites-nous ce dont vous avez besoin..."
-          class="w-full rounded-md px-3 py-2 bg-[#0b1220] border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:ring-4 focus:ring-primary/30 transition"
-        ></textarea>
-      </div>
-
-      <!-- Honeypot anti-spam -->
-      <input type="text" name="_gotcha" style="display:none" aria-hidden="true" />
-
-      <!-- Redirection après succès -->
-      <input type="hidden" name="_redirect" value="https://ton-site.com/merci.html" />
-
-      <!-- Boutons d’action -->
-      <div class="flex flex-col sm:flex-row sm:items-center gap-3 mt-4">
-        <button
-          type="submit"
-          class="w-full sm:w-auto inline-flex justify-center items-center gap-2 px-5 py-3 rounded-md bg-primary text-slate-900 font-semibold hover:opacity-90 transition focus:outline-none focus:ring-4 focus:ring-primary/30"
-        >
-          <i class="fa-regular fa-paper-plane"></i>
-          Envoyer
-        </button>
-
-        <a
-          href="https://wa.me/509XXXXXXXX"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="w-full sm:w-auto inline-flex justify-center items-center gap-2 px-5 py-3 rounded-md bg-[#25D366] text-slate-900 font-semibold hover:bg-[#20bd5a] transition"
-        >
-          <i class="fa-brands fa-whatsapp"></i>
-          Discuter sur WhatsApp
-        </a>
-      </div>
-    </form>
-  </div>
-</section>
-
-
-
-
-  </main>
-
-  <!-- Floating WhatsApp quick contact -->
-  <a class="whatsapp-float" id="quick-whatsapp" href="https://wa.me/50943882021" target="_blank" rel="noopener noreferrer" aria-label="Contacter via WhatsApp">
-    <div class="p-3 rounded-full shadow-lg" style="background: linear-gradient(135deg,#25D366,#10B981);">
-      <i class="fa-brands fa-whatsapp fa-xl text-white" aria-hidden="true"></i>
-    </div>
-  </a>
-
-  <!-- FOOTER -->
-  <footer class="mt-12 border-t border-white/6">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <div>
-          <img src="0logojfpromo-removebg-preview.png" width="70" height="70" alt="Logo JF promo">
-        </div>
-        <div>
-          <div class="font-semibold">JF promo</div>
-          <div class="text-sm text-slate-400">Services numériques rapides et fiables</div>
-        </div>
-      </div>
-
-      <nav aria-label="Liens rapides" class="flex items-center gap-6">
-        <a href="#services" class="text-sm hover:text-white">Services</a>
-        <a href="#contact" class="text-sm hover:text-white">Contact</a>
-        <div class="flex items-center gap-3">
-          <a href="#" aria-label="Facebook" class="text-slate-400 hover:text-white"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a>
-          <a href="https://wa.me/50943882021" aria-label="WhatsApp" class="text-slate-400 hover:text-white"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
-          <a href="#" aria-label="Instagram" class="text-slate-400 hover:text-white"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
-        </div>
-      </nav>
-
-      <div class="text-sm text-slate-500">© 2025 JF promo</div>
-    </div>
-  </footer>
-
-  <!-- Scripts: Menu, Form & On-Scroll animations (IntersectionObserver + Anime.js) -->
-  <script>
-    // Mobile menu toggle
-    (function(){
-      const btn = document.getElementById('btn-menu');
-      const mobile = document.getElementById('mobile-menu');
-      btn.addEventListener('click', () => {
-        const open = mobile.classList.toggle('hidden') === false;
-        btn.setAttribute('aria-expanded', String(open));
-        mobile.setAttribute('aria-hidden', String(!open));
-      });
-    })();
-
-    // Simple client-side form handling (MVP) with accessibility and minimal validation
-    (function(){
-      const form = document.getElementById('contact-form');
-      const status = document.getElementById('form-status');
-
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        // Basic validation
-        const name = form.name.value.trim();
-        const contact = form.contact.value.trim();
-        const service = form.service.value;
-        if (!name || !contact || !service) {
-          status.textContent = 'Veuillez remplir les champs obligatoires.';
-          return;
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        // Simulate successful submit (replace with real endpoint)
-        status.textContent = 'Envoi en cours…';
-        setTimeout(() => {
-          status.textContent = 'Merci ! Votre message a été envoyé. Nous répondrons sous peu.';
-          form.reset();
-        }, 900);
-      });
-
-      // WhatsApp quick contact: open with prefilled message
-      document.getElementById('whatsapp-contact').addEventListener('click', (e) => {
-        e.preventDefault();
-        const phone = '50943882021';
-        const msg = encodeURIComponent('Bonjour, je souhaite commander/un renseignement sur vos services.');
-        window.open(`https://wa.me/${phone}?text=${msg}`, '_blank', 'noopener');
-      });
-    })();
-
-    // On-scroll animations using IntersectionObserver & Anime.js
-    (function(){
-      const animatedEls = document.querySelectorAll('[data-animate]');
-      const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            animateIn(entry.target);
-            obs.unobserve(entry.target);
-          }
-        });
-      }, {threshold: 0.12});
-
-      animatedEls.forEach(el => {
-        // initial state for each element
-        el.style.opacity = 0;
-        el.style.transform = 'translateY(18px)';
-        observer.observe(el);
-      });
-
-      // animation function: applies different "futur premium" patterns depending on element
-      function animateIn(el) {
-        // If element contains a circular decorative child, do an expansion
-        const circle = el.querySelector('.circle-anim');
-        if (circle) {
-          // initial small
-          circle.style.transform = 'scale(.4)';
-          anime.timeline({
-            easing: 'cubicBezier(.2,.9,.2,1)',
-            duration: 750
-          })
-          .add({
-            targets: circle,
-            scale: [0.4, 1.05],
-            opacity: [0.0, 1],
-            duration: 700,
-          })
-          .add({
-            targets: el,
-            translateY: [18,0],
-            opacity: [0,1],
-            duration: 700,
-            offset: '-=500'
-          });
-          return;
+        
+        /* Touch-friendly buttons */
+        button, 
+        a[role="button"] {
+            min-height: 44px;
+            min-width: 44px;
         }
+        
+        /* Optimisation tactile */
+        input, 
+        select, 
+        textarea {
+            font-size: 16px; /* Empêche le zoom sur iOS */
+        }
+        
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: none;
+        }
+        
+        .content-hidden {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s;
+        }
+        
+        .content-visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 50%, #60a5fa 100%);
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.95) 0%, rgba(16, 185, 129, 0.9) 100%);
+        }
+        
+        /* Optimisations pour mobile */
+        .mobile-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        .mobile-card:active {
+            transform: scale(0.98);
+        }
+        
+        .menu-open {
+            max-height: 100vh;
+            opacity: 1;
+            transition: max-height 0.4s ease, opacity 0.3s ease;
+            overflow-y: auto;
+        }
+        
+        .menu-closed {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        
+        /* Scrollbar personnalisée pour mobile */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        
+        /* Optimisation pour les petits écrans */
+        @media (max-width: 640px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .mobile-text-sm {
+                font-size: 0.875rem;
+            }
+            
+            .mobile-p-4 {
+                padding: 1rem;
+            }
+            
+            .mobile-mt-2 {
+                margin-top: 0.5rem;
+            }
+        }
+        
+        /* Prévention du zoom sur iOS */
+        @supports (-webkit-touch-callout: none) {
+            input, select, textarea {
+                font-size: 16px;
+            }
+        }
+        
+        /* Animations optimisées pour mobile */
+        .will-change-transform {
+            will-change: transform;
+        }
+        
+        /* Amélioration de la lisibilité sur mobile */
+        .mobile-text-balance {
+            text-wrap: balance;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    
+    <!-- Splash Screen (disparaît après 2.5 secondes sur mobile) -->
+    <div id="splashScreen" class="splash-screen gradient-bg">
+        <div class="text-center text-white px-4">
+            <!-- Logo -->
+            <div class="mb-6 flex justify-center">
+                <div class="w-20 h-20 bg-white rounded-xl flex items-center justify-center shadow-lg">
+                    <img src="digitallogo.png" alt="Digital Money" class="w-16 h-16 object-contain">
+                </div>
+            </div>
+            
+            <h1 class="text-2xl font-bold mb-3 font-heading">Digital Money</h1>
+            <p class="text-lg font-light mb-4">Votre avenir financier commence ici</p>
+            <div class="w-20 h-1 bg-white mx-auto rounded-full"></div>
+            <p class="mt-6 text-sm max-w-xs mx-auto opacity-90">Plateforme de revenus en ligne • Marketing d'affiliation • Formations digitales</p>
+        </div>
+    </div>
+    
+    <!-- Contenu principal du site -->
+    <div id="mainContent" class="content-hidden">
+        
+        <!-- Header avec navigation mobile first -->
+        <header class="sticky top-0 z-50 bg-white shadow-sm">
+            <div class="px-4 py-3">
+                <div class="flex justify-between items-center">
+                    <!-- Logo -->
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-lg flex items-center justify-center mr-2">
+                            <img src="digitallogo.png" alt="Digital Money" class="w-6 h-6 object-contain">
+                        </div>
+                        <span class="text-xl font-bold text-blue-700 font-heading">Digital Money</span>
+                    </div>
+                    
+                    <!-- Bouton CTA mobile -->
+                    
+                    
+                    <!-- Menu burger mobile -->
+                    <button id="menuToggle" class="md:hidden text-gray-700 w-10 h-10 flex items-center justify-center">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    
+                    <!-- Menu desktop (caché sur mobile) -->
+                    <nav class="hidden md:flex space-x-6">
+                        <a href="#accueil" class="text-gray-700 hover:text-blue-600 font-medium text-sm transition duration-300">Accueil</a>
+                        <a href="#services" class="text-gray-700 hover:text-blue-600 font-medium text-sm transition duration-300">Services</a>
+                        <a href="#formations" class="text-gray-700 hover:text-blue-600 font-medium text-sm transition duration-300">Formations</a>
+                        <a href="#coaching" class="text-gray-700 hover:text-blue-600 font-medium text-sm transition duration-300">Coaching</a>
+                        <a href="#contact" class="text-gray-700 hover:text-blue-600 font-medium text-sm transition duration-300">Contact</a>
+                    </nav>
+                    
+                    <!-- Bouton CTA desktop -->
+                    <div class="hidden md:block">
+                        <a href="#contact" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-medium text-sm transition duration-300 shadow-sm">
+                            Commencer maintenant
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Menu mobile -->
+                <div id="mobileMenu" class="menu-closed md:hidden mt-3">
+                    <div class="flex flex-col space-y-3 pb-3">
+                        <a href="#accueil" class="text-gray-700 hover:text-blue-600 font-medium py-2 px-2 rounded-lg hover:bg-blue-50">Accueil</a>
+                        <a href="#services" class="text-gray-700 hover:text-blue-600 font-medium py-2 px-2 rounded-lg hover:bg-blue-50">Services</a>
+                        <a href="#formations" class="text-gray-700 hover:text-blue-600 font-medium py-2 px-2 rounded-lg hover:bg-blue-50">Formations</a>
+                        <a href="#coaching" class="text-gray-700 hover:text-blue-600 font-medium py-2 px-2 rounded-lg hover:bg-blue-50">Coaching</a>
+                        <a href="#contact" class="text-gray-700 hover:text-blue-600 font-medium py-2 px-2 rounded-lg hover:bg-blue-50">Contact</a>
+                        <a href="#inscription" class="bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium text-center transition duration-300 mt-1 shadow-sm">
+                            S'inscrire maintenant
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Section Hero (optimisé mobile) -->
+        <section id="accueil" class="hero-gradient text-white pt-12 pb-16 md:py-24">
+            <div class="px-4">
+                <div class="flex flex-col items-center">
+                    <div class="w-full max-w-xl">
+                        <h1 class="text-2xl sm:text-3xl font-bold mb-4 font-heading text-center animate-fade-in">
+                            Gagnez de l'argent en ligne depuis votre maison
+                        </h1>
+                        <p class="text-base sm:text-lg mb-6 opacity-90 text-center animate-slide-up mobile-text-balance">
+                            Digital Money vous guide pas à pas pour créer des revenus passifs grâce au marketing d'affiliation, aux eBooks et aux formations digitales.
+                        </p>
+                        <div class="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:space-x-3 animate-slide-up">
+                            <a href="#services" class="bg-white text-blue-700 hover:bg-gray-100 px-6 py-3 rounded-lg font-semibold text-center transition duration-300 shadow-sm active:scale-95">
+                                Découvrir nos services
+                            </a>
+                            <a href="#inscription" class="bg-transparent border border-white hover:bg-white hover:text-blue-700 px-6 py-3 rounded-lg font-semibold text-center transition duration-300 active:scale-95">
+                                S'inscrire maintenant
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mt-10 w-full max-w-sm">
+                        <div class="relative">
+                            <div class="bg-white rounded-xl shadow-lg p-2 transform rotate-2">
+                                <div class="bg-gradient-to-r from-blue-500 to-green-400 h-48 rounded-lg flex items-center justify-center">
+                                    <img src="illustration-removebg-preview.png" alt="Gagner en ligne" class="w-full h-full object-contain p-4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section Services (mobile first) -->
+        <section id="services" class="py-12 bg-white sm:py-16">
+            <div class="px-4">
+                <div class="text-center mb-10">
+                    <h2 class="text-2xl sm:text-3xl font-bold mb-3 font-heading text-gray-800">Nos Services pour Vous</h2>
+                    <p class="text-base text-gray-600 max-w-xl mx-auto mobile-text-balance">
+                        Découvrez comment Digital Money peut transformer votre vie financière.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    <!-- Service 1 -->
+                    <div class="bg-gray-50 rounded-xl p-6 mobile-card border border-gray-100">
+                        <div class="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-users text-blue-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-3 text-gray-800">Marketing d'Affiliation</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Apprenez à générer des commissions en promouvant des produits et services en ligne.
+                        </p>
+                        <ul class="mb-4 space-y-2">
+                            <li class="flex items-center text-sm">
+                                <i class="fas fa-check text-green-500 mr-2 text-xs"></i>
+                                <span>Formation complète pas à pas</span>
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <i class="fas fa-check text-green-500 mr-2 text-xs"></i>
+                                <span>Accès à des plateformes exclusives</span>
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <i class="fas fa-check text-green-500 mr-2 text-xs"></i>
+                                <span>Support continu et communauté</span>
+                            </li>
+                        </ul>
+                        <a href="#inscription" class="inline-flex items-center text-blue-600 font-medium text-sm hover:text-blue-800">
+                            En savoir plus <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Service 2 -->
+                    <div class="bg-gray-50 rounded-xl p-6 mobile-card border border-gray-100">
+                        <div class="bg-green-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-book-open text-green-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-3 text-gray-800">eBooks & Formations</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Accédez à notre bibliothèque d'eBooks et formations sur le marketing digital.
+                        </p>
+                        <ul class="mb-4 space-y-2">
+                            <li class="flex items-center text-sm">
+                                <i class="fas fa-check text-green-500 mr-2 text-xs"></i>
+                                <span>eBooks téléchargeables</span>
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <i class="fas fa-check text-green-500 mr-2 text-xs"></i>
+                                <span>Formations vidéo complètes</span>
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <i class="fas fa-check text-green-500 mr-2 text-xs"></i>
+                                <span>Mises à jour régulières</span>
+                            </li>
+                        </ul>
+                        <a href="#formations" class="inline-flex items-center text-blue-600 font-medium text-sm hover:text-blue-800">
+                            Voir les formations <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Service 3 -->
+                    <div class="bg-gray-50 rounded-xl p-6 mobile-card border border-gray-100">
+                        <div class="bg-purple-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-chalkboard-teacher text-purple-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-3 text-gray-800">Séances de Coaching</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Bénéficiez d'un accompagnement personnalisé pour atteindre vos objectifs financiers.
+                        </p>
+                        <ul class="mb-4 space-y-2">
+                            <li class="flex items-center text-sm">
+                                <i class="fas fa-check text-green-500 mr-2 text-xs"></i>
+                                <span>Séances individuelles ou en groupe</span>
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <i class="fas fa-check text-green-500 mr-2 text-xs"></i>
+                                <span>Analyse de votre progression</span>
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <i class="fas fa-check text-green-500 mr-2 text-xs"></i>
+                                <span>Stratégies adaptées à votre profil</span>
+                            </li>
+                        </ul>
+                        <a href="#coaching" class="inline-flex items-center text-blue-600 font-medium text-sm hover:text-blue-800">
+                            Réserver une séance <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section Formulaire d'inscription (mobile first) -->
+        <section id="inscription" class="py-12 bg-gradient-to-r from-blue-50 to-green-50 sm:py-16">
+            <div class="px-4">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl sm:text-3xl font-bold mb-3 font-heading text-gray-800">📋 Rejoignez Digital Money</h2>
+                    <p class="text-base text-gray-600 max-w-xl mx-auto mobile-text-balance">
+                        Transformez votre vie financière en vous inscrivant à notre programme d'affiliation.
+                    </p>
+                </div>
 
-        // For regular cards / sections: apply a layered animation
-        anime.timeline({
-          easing: 'cubicBezier(.2,.9,.2,1)',
-          duration: 700
-        })
-        .add({
-          targets: el,
-          translateY: [18,0],
-          opacity: [0,1],
-          delay: anime.stagger(60),
-        })
-        .add({
-          targets: el.querySelectorAll('.will-change-transform'),
-          scale: [0.98,1],
-          duration: 500,
-          offset: '-=420'
-        });
-      }
+                <div class="max-w-6xl mx-auto">
+                    <!-- Content Section -->
+                    <div class="mb-8">
+                        <div class="inline-block bg-gradient-to-r from-blue-100 to-green-100 text-blue-700 font-semibold px-4 py-1.5 rounded-full mb-4 text-sm">
+                            🚀 Programme d'affiliation
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">
+                            Commencez à gagner en ligne dès aujourd'hui
+                        </h3>
+                        <p class="text-gray-600 mb-6 text-sm">
+                            Rejoignez notre communauté et bénéficiez d'une formation complète, d'un accompagnement personnalisé et d'opportunités de revenus réels.
+                        </p>
 
-      // Additionally animate cards with a cascading effect
-      const cards = document.querySelectorAll('#services article');
-      cards.forEach((card, i) => {
-        card.style.opacity = 0;
-        card.style.transform = 'translateY(18px)';
-      });
-      const cardObs = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            // cascade per index
-            const idx = Array.from(cards).indexOf(entry.target);
+                        <!-- Benefits List -->
+                        <div class="space-y-4 mb-6">
+                            <div class="flex items-start">
+                                <div class="bg-green-100 p-2 rounded-lg mr-3 flex-shrink-0">
+                                    <i class="fas fa-check text-green-600 text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 text-sm">Formation Complète</h4>
+                                    <p class="text-gray-600 text-xs">Apprenez le marketing d'affiliation de A à Z</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 p-2 rounded-lg mr-3 flex-shrink-0">
+                                    <i class="fas fa-headset text-blue-600 text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 text-sm">Accompagnement 24/7</h4>
+                                    <p class="text-gray-600 text-xs">Support continu via WhatsApp et Telegram</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-purple-100 p-2 rounded-lg mr-3 flex-shrink-0">
+                                    <i class="fas fa-money-bill-wave text-purple-600 text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 text-sm">Revenus Réels</h4>
+                                    <p class="text-gray-600 text-xs">Commencez à générer vos premiers revenus rapidement</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Call to Action -->
+                        <div class="text-center">
+                            <button id="openInscriptionModal" class="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-semibold py-3.5 rounded-lg text-base transition duration-300 shadow-sm active:scale-95">
+                                <i class="fas fa-user-plus mr-2"></i> S'inscrire Maintenant
+                            </button>
+                            <p class="text-gray-500 text-xs mt-2">Inscription rapide - 5 minutes seulement</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal d'inscription (mobile optimisé) -->
+        <div id="inscriptionModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-start justify-center p-0 sm:p-4 overflow-y-auto">
+            <div class="bg-white w-full min-h-screen sm:min-h-0 sm:rounded-lg sm:shadow-2xl sm:max-w-2xl sm:max-h-[90vh] sm:my-auto overflow-y-auto">
+                <!-- Modal Header -->
+                <div class="sticky top-0 bg-gradient-to-r from-blue-600 to-green-500 p-4 sm:p-6 z-10">
+                    <div class="flex justify-between items-center">
+                        <div class="pr-4">
+                            <h3 class="text-lg font-bold text-white font-heading">Formulaire d'inscription</h3>
+                            <p class="text-white opacity-90 text-xs mt-1">Remplissez pour commencer votre parcours</p>
+                        </div>
+                        <button id="closeModal" class="text-white hover:text-gray-200 text-xl flex-shrink-0 w-10 h-10 flex items-center justify-center">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Formulaire -->
+                <form id="inscriptionForm" class="p-4 sm:p-6">
+                    <!-- Informations personnelles -->
+                    <div class="mb-6">
+                        <h4 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200">Informations personnelles</h4>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-gray-700 mb-1 text-sm">Nom complet <span class="text-red-500">*</span></label>
+                                <input type="text" id="fullName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base" required>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-gray-700 mb-1 text-sm">Âge <span class="text-red-500">*</span></label>
+                                    <input type="number" id="age" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base" required min="16" max="70">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-gray-700 mb-1 text-sm">Sexe <span class="text-red-500">*</span></label>
+                                    <select id="gender" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base" required>
+                                        <option value="">Sélectionnez</option>
+                                        <option value="Homme">Homme</option>
+                                        <option value="Femme">Femme</option>
+                                        <option value="Autre">Autre</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 mb-1 text-sm">Numéro WhatsApp <span class="text-red-500">*</span></label>
+                                <input type="tel" id="whatsapp" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base" placeholder="509XXXXXXXX" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 mb-1 text-sm">Adresse e-mail <span class="text-red-500">*</span></label>
+                                <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 mb-1 text-sm">Zone / Localité <span class="text-red-500">*</span></label>
+                                <input type="text" id="location" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base" required>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-gray-700 mb-1 text-sm">Pays de résidence <span class="text-red-500">*</span></label>
+                                    <select id="country" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base" required>
+                                        <option value="">Sélectionnez</option>
+                                        <option value="Haïti">Haïti</option>
+                                        <option value="France">France</option>
+                                        <option value="Canada">Canada</option>
+                                        <option value="USA">États-Unis</option>
+                                        <option value="Autre">Autre</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-gray-700 mb-1 text-sm">Profession</label>
+                                    <input type="text" id="profession" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Référent -->
+                    <div class="mb-6">
+                        <h4 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200">Référent(e)</h4>
+                        <div>
+                            <label class="block text-gray-700 mb-1 text-sm">Nom de la personne qui vous inscrit</label>
+                            <p class="text-xs text-gray-500 mb-3">(Si vous avez été recommandé(e))</p>
+                            <input type="text" id="referrer" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base">
+                        </div>
+                    </div>
+                    
+                    <!-- Votre expérience -->
+                    <div class="mb-6">
+                        <h4 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200">Votre expérience</h4>
+                        
+                        <div class="mb-4">
+                            <p class="text-gray-700 mb-3 text-sm">Avez-vous déjà une expérience dans le travail en ligne ? <span class="text-red-500">*</span></p>
+                            <div class="flex space-x-6">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="onlineExperience" value="Oui" class="h-5 w-5 text-blue-600" required>
+                                    <span class="ml-2 text-gray-700 text-sm">Oui</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="onlineExperience" value="Non" class="h-5 w-5 text-blue-600" required>
+                                    <span class="ml-2 text-gray-700 text-sm">Non</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div id="experienceDetails" class="hidden">
+                            <label class="block text-gray-700 mb-1 text-sm">Si oui, précisez brièvement :</label>
+                            <textarea id="experienceText" rows="2" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Disponibilité -->
+                    <div class="mb-6">
+                        <h4 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200">Disponibilité</h4>
+                        
+                        <p class="text-gray-700 mb-3 text-sm">Combien d'heures par jour pouvez-vous consacrer ? <span class="text-red-500">*</span></p>
+                        <div class="space-y-2">
+                            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-blue-50 cursor-pointer">
+                                <input type="radio" name="availability" value="1–2 heures" class="h-5 w-5 text-blue-600 mr-3" required>
+                                <span class="text-gray-700 text-sm">1–2 heures</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-blue-50 cursor-pointer">
+                                <input type="radio" name="availability" value="3–4 heures" class="h-5 w-5 text-blue-600 mr-3" required>
+                                <span class="text-gray-700 text-sm">3–4 heures</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-blue-50 cursor-pointer">
+                                <input type="radio" name="availability" value="5 heures ou plus" class="h-5 w-5 text-blue-600 mr-3" required>
+                                <span class="text-gray-700 text-sm">5 heures ou plus</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-blue-50 cursor-pointer">
+                                <input type="radio" name="availability" value="Variable" class="h-5 w-5 text-blue-600 mr-3" required>
+                                <span class="text-gray-700 text-sm flex-1">Variable selon mon emploi du temps</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Compétences et outils -->
+                    <div class="mb-6">
+                        <h4 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200">Compétences et outils</h4>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-gray-700 mb-3 text-sm">Téléphone avec WhatsApp/TikTok/Telegram ? <span class="text-red-500">*</span></p>
+                                <div class="flex space-x-6">
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="smartphone" value="Oui" class="h-5 w-5 text-blue-600" required>
+                                        <span class="ml-2 text-gray-700 text-sm">Oui</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="smartphone" value="Non" class="h-5 w-5 text-blue-600" required>
+                                        <span class="ml-2 text-gray-700 text-sm">Non</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <p class="text-gray-700 mb-3 text-sm">Base en marketing digital ? <span class="text-red-500">*</span></p>
+                                <div class="flex flex-wrap gap-4">
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="marketing" value="Oui" class="h-5 w-5 text-blue-600" required>
+                                        <span class="ml-2 text-gray-700 text-sm">Oui</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="marketing" value="Non" class="h-5 w-5 text-blue-600" required>
+                                        <span class="ml-2 text-gray-700 text-sm">Non</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="marketing" value="Un peu" class="h-5 w-5 text-blue-600" required>
+                                        <span class="ml-2 text-gray-700 text-sm">Un peu</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Méthodes de paiement -->
+                    <div class="mb-6">
+                        <h4 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200">Méthodes de paiement</h4>
+                        
+                        <div class="mb-4">
+                            <p class="text-gray-700 mb-3 text-sm">Quels moyens de paiement utilisez-vous ? <span class="text-red-500">*</span></p>
+                            <div class="grid grid-cols-2 gap-3">
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-blue-50 cursor-pointer">
+                                    <input type="radio" name="payment" value="NatCash" class="h-5 w-5 text-blue-600 mr-2" required>
+                                    <span class="text-gray-700 text-sm">NatCash</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-blue-50 cursor-pointer">
+                                    <input type="radio" name="payment" value="MonCash" class="h-5 w-5 text-blue-600 mr-2" required>
+                                    <span class="text-gray-700 text-sm">MonCash</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-blue-50 cursor-pointer">
+                                    <input type="radio" name="payment" value="Compte bancaire" class="h-5 w-5 text-blue-600 mr-2" required>
+                                    <span class="text-gray-700 text-sm">Bancaire</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-blue-50 cursor-pointer">
+                                    <input type="radio" name="payment" value="Autre" class="h-5 w-5 text-blue-600 mr-2" required>
+                                    <span class="text-gray-700 text-sm">Autre</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 mb-1 text-sm">Numéro NatCash / MonCash</label>
+                            <input type="text" id="paymentNumber" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base" placeholder="509XXXXXXXX">
+                        </div>
+                    </div>
+                    
+                    <!-- Découverte -->
+                    <div class="mb-6">
+                        <h4 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200">Découverte</h4>
+                        
+                        <p class="text-gray-700 mb-3 text-sm">Comment avez-vous connu Digital Money ? <span class="text-red-500">*</span></p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-blue-50 cursor-pointer">
+                                <input type="radio" name="discovery" value="TikTok" class="h-5 w-5 text-blue-600 mr-2" required>
+                                <span class="text-gray-700 text-sm">TikTok</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-blue-50 cursor-pointer">
+                                <input type="radio" name="discovery" value="WhatsApp" class="h-5 w-5 text-blue-600 mr-2" required>
+                                <span class="text-gray-700 text-sm">WhatsApp</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-blue-50 cursor-pointer">
+                                <input type="radio" name="discovery" value="Recommandation" class="h-5 w-5 text-blue-600 mr-2" required>
+                                <span class="text-gray-700 text-sm">Recommandation</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-blue-50 cursor-pointer">
+                                <input type="radio" name="discovery" value="Facebook" class="h-5 w-5 text-blue-600 mr-2" required>
+                                <span class="text-gray-700 text-sm">Facebook</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-blue-50 cursor-pointer">
+                                <input type="radio" name="discovery" value="Instagram" class="h-5 w-5 text-blue-600 mr-2" required>
+                                <span class="text-gray-700 text-sm">Instagram</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-blue-50 cursor-pointer">
+                                <input type="radio" name="discovery" value="Autre" class="h-5 w-5 text-blue-600 mr-2" required>
+                                <span class="text-gray-700 text-sm">Autre</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Engagement -->
+                    <div class="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                        <h4 class="text-lg font-bold text-gray-800 mb-3">📌 Engagement</h4>
+                        <p class="text-gray-700 mb-4 italic text-sm">
+                            En remplissant ce formulaire, je confirme mon intérêt à rejoindre le programme Digital Money.
+                        </p>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-700 mb-1 text-sm">Signature / Nom <span class="text-red-500">*</span></label>
+                                <input type="text" id="signature" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 mb-1 text-sm">Date <span class="text-red-500">*</span></label>
+                                <input type="date" id="date" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Bouton de soumission -->
+                    <div class="text-center sticky bottom-0 bg-white pt-4 pb-2 -mx-4 px-4 border-t border-gray-200">
+                        <button type="submit" class="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-bold py-3.5 rounded-lg text-base transition duration-300 shadow-sm active:scale-95">
+                            <i class="fab fa-whatsapp mr-2"></i> Envoyer via WhatsApp
+                        </button>
+                        <p class="text-gray-500 text-xs mt-2">Le formulaire sera envoyé au +509 413 82430</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Section Formations -->
+        <section id="formations" class="py-12 bg-gray-50 sm:py-16">
+            <div class="px-4">
+                <div class="text-center mb-10">
+                    <h2 class="text-2xl sm:text-3xl font-bold mb-3 font-heading text-gray-800">Nos Formations Populaires</h2>
+                    <p class="text-base text-gray-600 max-w-xl mx-auto mobile-text-balance">
+                        Des formations complètes pour développer vos compétences et générer des revenus en ligne.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                    <!-- Formation 1 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm mobile-card">
+                        <div class="bg-blue-500 h-2"></div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-lg font-bold text-gray-800">Marketing d'Affiliation Débutant</h3>
+                                <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded-full">Populaire</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-5">Apprenez les bases du marketing d'affiliation et commencez à générer vos premiers revenus.</p>
+                            <div class="mb-5">
+                                <span class="text-2xl font-bold text-gray-800">$49</span>
+                                <span class="text-gray-500 text-sm">/ formation</span>
+                            </div>
+                            <a href="#contact" class="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-2.5 rounded-lg font-medium text-sm transition duration-300 active:scale-95">
+                                Acheter maintenant
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Formation 2 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm mobile-card">
+                        <div class="bg-green-500 h-2"></div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4">Création d'eBooks à Vendre</h3>
+                            <p class="text-gray-600 text-sm mb-5">Découvrez comment créer, publier et vendre vos propres eBooks.</p>
+                            <div class="mb-5">
+                                <span class="text-2xl font-bold text-gray-800">$25</span>
+                                <span class="text-gray-500 text-sm">/ formation</span>
+                            </div>
+                            <a href="#contact" class="block w-full bg-green-600 hover:bg-green-700 text-white text-center py-2.5 rounded-lg font-medium text-sm transition duration-300 active:scale-95">
+                                Acheter maintenant
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Formation 3 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm mobile-card">
+                        <div class="bg-purple-500 h-2"></div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4">Réseaux Sociaux pour Vendre</h3>
+                            <p class="text-gray-600 text-sm mb-5">Maîtrisez les réseaux sociaux pour promouvoir vos produits efficacement.</p>
+                            <div class="mb-5">
+                                <span class="text-2xl font-bold text-gray-800">$59</span>
+                                <span class="text-gray-500 text-sm">/ formation</span>
+                            </div>
+                            <a href="#contact" class="block w-full bg-purple-600 hover:bg-purple-700 text-white text-center py-2.5 rounded-lg font-medium text-sm transition duration-300 active:scale-95">
+                                Acheter maintenant
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Formation 4 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm mobile-card">
+                        <div class="bg-yellow-500 h-2"></div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4">Séance Coaching</h3>
+                            <p class="text-gray-600 text-sm mb-5">Profitez d'une séance individuelle pour atteindre vos objectifs plus rapidement.</p>
+                            <div class="mb-5">
+                                <span class="text-2xl font-bold text-gray-800">$20</span>
+                                <span class="text-gray-500 text-sm">/ séance</span>
+                            </div>
+                            <a href="#contact" class="block w-full bg-yellow-600 hover:bg-yellow-700 text-white text-center py-2.5 rounded-lg font-medium text-sm transition duration-300 active:scale-95">
+                                Réserver maintenant
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-10">
+                    <a href="#contact" class="inline-flex items-center bg-gray-800 hover:bg-black text-white px-6 py-3 rounded-lg font-semibold text-sm transition duration-300 shadow-sm active:scale-95">
+                        <i class="fas fa-graduation-cap mr-2"></i> Voir toutes les formations
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section Coaching -->
+        <section id="coaching" class="py-12 bg-white sm:py-16">
+            <div class="px-4">
+                <div class="flex flex-col">
+                    <div class="mb-10">
+                        <h2 class="text-2xl sm:text-3xl font-bold mb-4 font-heading text-gray-800">Coaching Personnalisé pour Votre Succès</h2>
+                        <p class="text-base text-gray-600 mb-6">
+                            Nos séances de coaching vous offrent un accompagnement sur mesure pour maximiser vos résultats.
+                        </p>
+                        
+                        <div class="space-y-5 mb-8">
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 p-2.5 rounded-lg mr-3 flex-shrink-0">
+                                    <i class="fas fa-user-check text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-base font-bold text-gray-800 mb-1">Analyse Personnalisée</h3>
+                                    <p class="text-gray-600 text-sm">Nous évaluons votre situation et définissons vos objectifs financiers.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-green-100 p-2.5 rounded-lg mr-3 flex-shrink-0">
+                                    <i class="fas fa-road text-green-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-base font-bold text-gray-800 mb-1">Plan d'Action Concret</h3>
+                                    <p class="text-gray-600 text-sm">Nous élaborons une stratégie étape par étape adaptée à votre profil.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-purple-100 p-2.5 rounded-lg mr-3 flex-shrink-0">
+                                    <i class="fas fa-chart-bar text-purple-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-base font-bold text-gray-800 mb-1">Suivi des Résultats</h3>
+                                    <p class="text-gray-600 text-sm">Nous analysons vos progrès et ajustons la stratégie si nécessaire.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <a href="#contact" class="inline-flex items-center bg-gradient-to-r from-blue-600 to-green-500 hover:from-blue-700 hover:to-green-600 text-white px-6 py-3 rounded-lg font-semibold text-sm transition duration-300 shadow-sm active:scale-95">
+                                <i class="fas fa-calendar-check mr-2"></i> Réserver une séance
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <!-- Témoignage Client -->
+                        <div class="bg-gradient-to-br from-blue-50 to-green-50 rounded-xl p-6 shadow-sm">
+                            <div class="bg-white rounded-lg shadow-sm p-5 mb-6">
+                                <h3 class="text-lg font-bold text-gray-800 mb-4">Témoignage Client</h3>
+                                <div class="flex items-start mb-4">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                                        <i class="fas fa-user text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-gray-800 text-sm">Jean-Pierre L.</p>
+                                        <p class="text-gray-600 text-xs">Participant au coaching, Haïti</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-700 italic text-sm">
+                                    "Grâce au coaching Digital Money, j'ai pu générer mes premiers revenus en ligne en seulement 3 mois."
+                                </p>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-white rounded-lg p-4 text-center shadow-sm">
+                                    <div class="text-2xl font-bold text-blue-600 mb-1">95%</div>
+                                    <p class="text-gray-700 font-medium text-xs">Satisfaction clients</p>
+                                </div>
+                                <div class="bg-white rounded-lg p-4 text-center shadow-sm">
+                                    <div class="text-2xl font-bold text-green-600 mb-1">+40%</div>
+                                    <p class="text-gray-700 font-medium text-xs">Augmentation revenus</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section Contact -->
+        <section id="contact" class="py-12 bg-gray-800 text-white sm:py-16">
+            <div class="px-4">
+                <div class="text-center mb-10">
+                    <h2 class="text-2xl sm:text-3xl font-bold mb-3 font-heading">Contactez Digital Money</h2>
+                    <p class="text-base text-gray-300 max-w-xl mx-auto mobile-text-balance">
+                        Prêt à transformer votre vie financière? Contactez-nous pour discuter de vos objectifs.
+                    </p>
+                </div>
+                
+                <div class="flex flex-col">
+                    <div class="mb-8">
+                        <div class="bg-gray-900 rounded-xl p-6 shadow-sm">
+                            <h3 class="text-xl font-bold mb-5 font-heading">Informations de Contact</h3>
+                            
+                            <div class="space-y-5">
+                                <div class="flex items-start">
+                                    <div class="bg-blue-600 p-2.5 rounded-lg mr-3 flex-shrink-0">
+                                        <i class="fas fa-envelope text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-base font-bold mb-1">Email</h4>
+                                        <a href="mailto:marlinep39@gmail.com" class="text-gray-300 hover:text-white transition duration-300 text-sm">marlinep39@gmail.com</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="bg-green-600 p-2.5 rounded-lg mr-3 flex-shrink-0">
+                                        <i class="fas fa-phone text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-base font-bold mb-1">Téléphone</h4>
+                                        <a href="tel:+50941382430" class="text-gray-300 hover:text-white transition duration-300 text-sm">+509 4138 2430</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="bg-purple-600 p-2.5 rounded-lg mr-3 flex-shrink-0">
+                                        <i class="fas fa-map-marker-alt text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-base font-bold mb-1">Adresse</h4>
+                                        <p class="text-gray-300 text-sm">Haïti</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="bg-gray-900 rounded-xl p-6 shadow-sm">
+                            <h3 class="text-xl font-bold mb-5 font-heading">Envoyez-nous un message</h3>
+                            <form id="contactForm">
+                                <div class="mb-4">
+                                    <label for="name" class="block text-gray-300 mb-1 text-sm">Nom complet</label>
+                                    <input type="text" id="name" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-600 text-base" placeholder="Votre nom">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="email" class="block text-gray-300 mb-1 text-sm">Adresse email</label>
+                                    <input type="email" id="email" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-600 text-base" placeholder="votre@email.com">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="message" class="block text-gray-300 mb-1 text-sm">Message</label>
+                                    <textarea id="message" rows="4" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-600 text-base" placeholder="Décrivez vos objectifs..."></textarea>
+                                </div>
+                                
+                                <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-green-500 hover:from-blue-700 hover:to-green-600 text-white font-bold py-3.5 rounded-lg transition duration-300 shadow-sm active:scale-95">
+                                    Envoyer le message
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white py-8">
+            <div class="px-4">
+                <div class="flex flex-col">
+                    <div class="mb-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-2">
+                                <span class="text-white font-bold">DM</span>
+                            </div>
+                            <span class="text-xl font-bold font-heading">Digital Money</span>
+                        </div>
+                        <p class="text-gray-400 text-sm">
+                            Plateforme d'éducation financière et de développement de revenus en ligne.
+                        </p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <p class="text-gray-400 text-xs mb-4">© 2025 Digital Money. Tous droits réservés.</p>
+                        <div class="flex flex-wrap justify-center space-x-4 text-gray-400 text-xs">
+                            <a href="#accueil" class="hover:text-white">Accueil</a>
+                            <a href="#services" class="hover:text-white">Services</a>
+                            <a href="#formations" class="hover:text-white">Formations</a>
+                            <a href="#coaching" class="hover:text-white">Coaching</a>
+                            <a href="#contact" class="hover:text-white">Contact</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts JavaScript optimisés mobile -->
+    <script>
+        // Animation du splash screen
+        document.addEventListener('DOMContentLoaded', function() {
+            const splashScreen = document.getElementById('splashScreen');
+            const mainContent = document.getElementById('mainContent');
+            
+            // Animation plus rapide sur mobile (2.5s au lieu de 3s)
+            const splashDuration = window.innerWidth < 768 ? 2500 : 3000;
+            
+            // Animation d'entrée
             anime({
-              targets: entry.target,
-              translateY: [22,0],
-              opacity: [0,1],
-              duration: 700,
-              delay: idx * 120,
-              easing: 'cubicBezier(.2,.9,.2,1)'
+                targets: '#splashScreen',
+                opacity: [0, 1],
+                duration: 500,
+                easing: 'easeInOutQuad'
             });
-            obs.unobserve(entry.target);
-          }
+            
+            // Animation du logo
+            anime({
+                targets: '#splashScreen .rounded-xl',
+                scale: [0.8, 1],
+                rotate: [0, 360],
+                duration: 1200,
+                easing: 'easeOutElastic(1, .5)',
+                delay: 200
+            });
+            
+            // Animation du texte
+            anime({
+                targets: '#splashScreen h1, #splashScreen p',
+                translateY: [15, 0],
+                opacity: [0, 1],
+                duration: 800,
+                delay: anime.stagger(150),
+                easing: 'easeOutQuad'
+            });
+            
+            // Disparition du splash screen
+            setTimeout(function() {
+                anime({
+                    targets: '#splashScreen',
+                    opacity: 0,
+                    scale: 0.95,
+                    duration: 600,
+                    easing: 'easeInOutQuad',
+                    complete: function() {
+                        splashScreen.style.display = 'none';
+                        mainContent.classList.remove('content-hidden');
+                        mainContent.classList.add('content-visible');
+                        
+                        anime({
+                            targets: '#mainContent',
+                            opacity: [0, 1],
+                            duration: 500,
+                            easing: 'easeInOutQuad'
+                        });
+                    }
+                });
+            }, splashDuration);
+            
+            // Gestion du menu mobile
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            let menuOpen = false;
+            
+            menuToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (!menuOpen) {
+                    mobileMenu.classList.remove('menu-closed');
+                    mobileMenu.classList.add('menu-open');
+                    menuToggle.innerHTML = '<i class="fas fa-times text-xl"></i>';
+                    menuOpen = true;
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    closeMobileMenu();
+                }
+            });
+            
+            // Fermer le menu en cliquant à l'extérieur
+            document.addEventListener('click', function(e) {
+                if (menuOpen && !mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                    closeMobileMenu();
+                }
+            });
+            
+            // Fermer le menu en scrollant
+            window.addEventListener('scroll', function() {
+                if (menuOpen) {
+                    closeMobileMenu();
+                }
+            });
+            
+            function closeMobileMenu() {
+                mobileMenu.classList.remove('menu-open');
+                mobileMenu.classList.add('menu-closed');
+                menuToggle.innerHTML = '<i class="fas fa-bars text-xl"></i>';
+                menuOpen = false;
+                document.body.style.overflow = 'auto';
+            }
+            
+            // Fermer le menu au clic sur un lien
+            const mobileLinks = document.querySelectorAll('#mobileMenu a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+            
+            // Gestion de la modale d'inscription
+            const modal = document.getElementById('inscriptionModal');
+            const openBtn = document.getElementById('openInscriptionModal');
+            const closeBtn = document.getElementById('closeModal');
+            const form = document.getElementById('inscriptionForm');
+            
+            // Ouvrir la modale
+            openBtn.addEventListener('click', function() {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+                
+                // Animation d'entrée
+                anime({
+                    targets: modal.children[0],
+                    translateY: [50, 0],
+                    opacity: [0, 1],
+                    duration: 300,
+                    easing: 'easeOutQuad'
+                });
+            });
+            
+            // Fermer la modale
+            closeBtn.addEventListener('click', closeModal);
+            
+            // Fermer en cliquant à l'extérieur
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Fermer avec la touche Échap
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
+            
+            function closeModal() {
+                anime({
+                    targets: modal.children[0],
+                    translateY: [0, 50],
+                    opacity: [1, 0],
+                    duration: 200,
+                    easing: 'easeInQuad',
+                    complete: function() {
+                        modal.classList.add('hidden');
+                        modal.classList.remove('flex');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+            
+            // Gestion de l'affichage des détails d'expérience
+            const onlineExperienceRadios = document.querySelectorAll('input[name="onlineExperience"]');
+            const experienceDetails = document.getElementById('experienceDetails');
+            
+            onlineExperienceRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'Oui') {
+                        experienceDetails.classList.remove('hidden');
+                        document.getElementById('experienceText').required = true;
+                    } else {
+                        experienceDetails.classList.add('hidden');
+                        document.getElementById('experienceText').required = false;
+                    }
+                });
+            });
+            
+            // Initialiser la date d'aujourd'hui
+            const today = new Date();
+            const formattedDate = today.toISOString().split('T')[0];
+            document.getElementById('date').value = formattedDate;
+            
+            // Soumission du formulaire d'inscription
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Récupérer les données principales
+                const fullName = document.getElementById('fullName').value;
+                const whatsapp = document.getElementById('whatsapp').value;
+                const email = document.getElementById('email').value;
+                
+                // Construire le message WhatsApp simplifié pour mobile
+                let whatsappMessage = `*📋 INSCRIPTION DIGITAL MONEY*%0A%0A`;
+                whatsappMessage += `👤 *Nom:* ${fullName}%0A`;
+                whatsappMessage += `📱 *WhatsApp:* ${whatsapp}%0A`;
+                whatsappMessage += `📧 *Email:* ${email}%0A`;
+                whatsappMessage += `📅 *Date:* ${new Date().toLocaleDateString('fr-FR')}%0A%0A`;
+                whatsappMessage += `_Formulaire d'inscription complété. Contactez-moi pour les prochaines étapes._`;
+                
+                // Animation du bouton
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Préparation...';
+                submitBtn.disabled = true;
+                
+                // Redirection vers WhatsApp après un délai
+                setTimeout(() => {
+                    const phoneNumber = '50941382430';
+                    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${whatsappMessage}`;
+                    
+                    // Ouvrir WhatsApp
+                    window.open(whatsappUrl, '_blank');
+                    
+                    // Réinitialiser le bouton
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                        form.reset();
+                        closeModal();
+                        
+                        // Notification de confirmation
+                        if ('Notification' in window && Notification.permission === 'granted') {
+                            new Notification('Inscription envoyée!', {
+                                body: 'Vérifiez WhatsApp pour finaliser.',
+                                icon: 'digitallogo.png'
+                            });
+                        }
+                    }, 1000);
+                }, 1500);
+            });
+            
+            // Gestion du formulaire de contact
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const submitBtn = contactForm.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.textContent;
+                    
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Envoi...';
+                    submitBtn.disabled = true;
+                    
+                    // Simulation d'envoi
+                    setTimeout(function() {
+                        submitBtn.innerHTML = '<i class="fas fa-check mr-2"></i> Envoyé!';
+                        submitBtn.style.background = 'linear-gradient(to right, #10b981, #059669)';
+                        
+                        setTimeout(function() {
+                            contactForm.reset();
+                            submitBtn.textContent = originalText;
+                            submitBtn.disabled = false;
+                            submitBtn.style.background = 'linear-gradient(to right, #3b82f6, #10b981)';
+                        }, 2000);
+                    }, 1000);
+                });
+            }
+            
+            // Smooth scrolling pour les ancres
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        const offset = 70;
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Optimisation du scroll pour mobile
+            let lastScrollTop = 0;
+            const header = document.querySelector('header');
+            
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    // Scroll vers le bas
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    // Scroll vers le haut
+                    header.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+            
+            // Animation des éléments au scroll
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.mobile-card, .animate-fade-in, .animate-slide-up');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.1;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll();
+            
+            // Prévenir le zoom sur les inputs iOS
+            if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+                document.addEventListener('focus', function(e) {
+                    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+                        document.body.style.zoom = '0.9999';
+                    }
+                }, true);
+                
+                document.addEventListener('blur', function(e) {
+                    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+                        document.body.style.zoom = '1';
+                    }
+                }, true);
+            }
         });
-      }, {threshold: 0.14});
-      cards.forEach(c => cardObs.observe(c));
-    })();
-
-    // Script pour le menu déroulant Facebook
-    (function() {
-      const buyBtn = document.getElementById('buy-facebook');
-      const menuWrapper = document.getElementById('plan-menu-facebook');
-      if (!buyBtn || !menuWrapper) return;
-      
-      const menu = menuWrapper.querySelector('div');
-      let open = false;
-
-      // Toggle menu affichage avec animation
-      buyBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        open = !open;
-
-        if (open) {
-          menuWrapper.classList.remove('hidden');
-          requestAnimationFrame(() => {
-            menu.classList.remove('opacity-0', 'scale-95');
-            menu.classList.add('opacity-100', 'scale-100');
-          });
-        } else {
-          menu.classList.remove('opacity-100', 'scale-100');
-          menu.classList.add('opacity-0', 'scale-95');
-          setTimeout(() => menuWrapper.classList.add('hidden'), 250);
-        }
-      });
-
-      // Ferme au clic extérieur
-      document.addEventListener('click', (e) => {
-        if (open && !menuWrapper.contains(e.target) && e.target !== buyBtn) {
-          menu.classList.remove('opacity-100', 'scale-100');
-          menu.classList.add('opacity-0', 'scale-95');
-          setTimeout(() => menuWrapper.classList.add('hidden'), 250);
-          open = false;
-        }
-      });
-
-      // Liens vers WhatsApp
-      menu.querySelectorAll('button[data-plan]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const plan = btn.dataset.plan;
-          const price = btn.dataset.price;
-          const service = 'Boostage de Publicité Facebook';
-          const phone = '50943882021';
-          const msg = encodeURIComponent(
-            `Bonjour 👋, je souhaite acheter le service "${service}"\nPlan choisi : ${plan}\nPrix : ${price}`
-          );
-          window.open(`https://wa.me/${phone}?text=${msg}`, '_blank', 'noopener');
-        });
-      });
-    })();
-  </script>
+    </script>
 </body>
 </html>
